@@ -98,16 +98,21 @@ function calcOverlap(container, child){
       let rightBound = Math.min(container.right, (child.coX + child.rad))
       let leftBound = Math.max(container.left, (child.coX - child.rad))
 
-      for (var i = leftBound; i < rightBound; i+= increment){
-        let circleY = Math.sqrt(Math.pow(child.rad,2) - Math.pow((i - child.coX),2))
-        let topBound = Math.min(container.top, (child.coY + circleY))
-        let lowBound = Math.max(container.bottom, (child.coY - circleY))
+      if (rightBound >= leftBound){
+        for (var i = leftBound; i < rightBound; i+= increment){
+          let circleY = Math.sqrt(Math.pow(child.rad,2) - Math.pow((i - child.coX),2))
+          let topBound = Math.min(container.top, (child.coY + circleY))
+          let lowBound = Math.max(container.bottom, (child.coY - circleY))
 
-        let length = topBound - lowBound
-        let incremental_area = length * increment
-        overlapArea += incremental_area
+          let length = topBound - lowBound
+          let incremental_area = length * increment
+          overlapArea += incremental_area
 
+          }
+        }else {
+          overlapArea = 0;
         }
+
 
     }
 
