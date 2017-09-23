@@ -1,6 +1,6 @@
 const express = require('express')
 const router = new express.Router()
-const stringCompression = require('./stringCompression')
+const stringCompression = require('./stringCompression').stringCompression
 
 // Testing post endpoint
 router.post('/test', (req, res) => {
