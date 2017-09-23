@@ -1,4 +1,6 @@
+const axios = require('axios')
 const _ = require('lodash')
+
 let prevMessageId = 0
 let messageQueue = []
 let orders = []
@@ -120,6 +122,12 @@ function processEndMessage (message) {
   orders = []
   messageQueue = []
   prevMessageId = 0
+
+  axios({
+    method: 'post',
+    url: 'https://cis2017-coordinator.herokuapp.com/api/evaluate/result',
+    data: history
+  })
 }
 
 function tryMatching (message) {
