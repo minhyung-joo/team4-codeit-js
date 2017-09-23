@@ -2,6 +2,9 @@ function trainRoute (req, res) {
   let destinationName = req.body.destination
   let stations = req.body.stations
 
+  console.log(stations)
+  console.log(destinationName)
+
   let index = 0
   const vertexTable = {}
   stations.forEach(station => {
