@@ -68,39 +68,6 @@ function releaseSchedule(req, res){
 
   max /= 1000;
 
-  // for(let k=0; k < subArr.length-1; k++){
-  //   if(max )
-  // }
-
-
-
-  // startArr.sort(function(a,b){
-  //   let varA = moment(a)
-  //   let varB = moment(b)
-  //   if(varA.diff(varB)) return 1
-  //   if(varB.diff(varA)) return -1
-  //   return 0
-  // })
-  //
-  // endArr.sort(function(a,b){
-  //   let varA = moment(a)
-  //   let varB = moment(b)
-  //   if(varA.diff(varB)) return 1
-  //   if(varB.diff(varA)) return -1
-  //   return 0
-  // })
-
-
-  // let maxGap = 0;
-  // for(let j=0; j < startArr.length-1; j++){
-  //   let lowerBound = moment(endArr[j]);
-  //   let upperBound = moment(startArr[j+1]);
-  //   let gap = upperBound.diff(lowerBound, "seconds")
-  //   if(maxGap < gap){
-  //     maxGap = gap
-  //   }
-  // }
-
 
 
   // return res.type('text/plain').status(200).send(moment(result).add(1, 'day').format('LLLL'))
@@ -118,7 +85,7 @@ function releaseSchedule(req, res){
 function getTime(str){
   let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
-  let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 8);
+  let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let timeZone = time.substring(time.length-4, time.length-2)
   let londonTime = "";
 
