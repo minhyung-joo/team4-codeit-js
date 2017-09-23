@@ -27,6 +27,7 @@ function RLE (str) {
     return 0
   }
 
+  str.toLowerCase()
   let compressed = ''
   let lastChar = str[0]
   let counter = 1
@@ -35,7 +36,7 @@ function RLE (str) {
       counter++
     } else {
       if (counter > 1) {
-        compressed += '1'
+        compressed += counter
       }
       compressed += lastChar
       lastChar = str[i]
@@ -44,7 +45,7 @@ function RLE (str) {
   }
 
   if (counter > 1) {
-    compressed += '1'
+    compressed += counter
   }
   compressed += lastChar
 
