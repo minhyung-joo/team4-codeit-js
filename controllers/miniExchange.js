@@ -9,7 +9,6 @@ let closePrice = {}
 let ended = false
 
 function miniExchange (req, res) {
-  console.log('RECEIVED', req.body)
   messageQueue.push(req.body)
   if (checkTransaction(messageQueue)) {
     for (let message of messageQueue) {
@@ -27,10 +26,6 @@ function checkTransaction (queue) {
   queue.sort((a, b) => a.messageId - b.messageId)
   const first = queue[0]
   const last = queue[queue.length - 1]
-  console.log(queue)
-  console.log(first.messageType === 'SOD')
-  console.log(last.messageType === 'EOD')
-  console.log((last.messageId - first.messageId + 1 === queue.length))
   if (
     first.messageType === 'SOD' &&
     last.messageType === 'EOD' &&
