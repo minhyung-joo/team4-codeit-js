@@ -81,8 +81,8 @@ function releaseSchedule(req, res){
   max /= 1000;
 
   // return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('text/plain').status(200).send(max.toString())
-  return res.type('application/json').status(200).json(subArr)
+  return res.type('text/plain').status(200).send(max.toString())
+  // return res.type('application/json').status(200).json(subArr)
 }
 
 
