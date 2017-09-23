@@ -18,12 +18,13 @@ function releaseSchedule(req, res){
     pairArr.push([startTask, endTask])
   }
 
-  pairArr.push([endIT,endIT])
+  // pairArr.push([endIT,endIT])
 
   // for(let k=0; k < pairArr.length; k++){
   //   // interval all below startIT
-  //   if(moment(startIT).diff(moment(pairArr[k][1]))){
-  //     pairArr[k][1] = []
+  //   if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
+  //     delete pairArr[k][1];
+  //     delete pairArr[k][0];
   //   }
   // }
 
@@ -50,11 +51,10 @@ function releaseSchedule(req, res){
 
       subIdx++;
 
-      if(moment(pairArr[j][0]).diff(endIT, 'milliseconds') > 0.0){
-        subArr[subIdx][0] = endIT
-        continue
-      }
-
+      // if(moment(pairArr[j][0]).diff(endIT, 'milliseconds') > 0.0){
+      //   subArr[subIdx][0] = endIT
+      //   continue
+      // }
       if(max < moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]))){
         max = moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]));
       }
@@ -64,10 +64,12 @@ function releaseSchedule(req, res){
     if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
       if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
         subArr[subIdx][1] = endIT
+
       } else {
         subArr[subIdx][1] = pairArr[j][1]
       }
     }
+
 
   }
 
