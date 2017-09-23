@@ -2,7 +2,7 @@ const axios = require('axios')
 const _ = require('lodash')
 
 let currentRunId
-let prevMessageId = 0
+let expectedId = 1
 let messageQueue = []
 let orders = []
 let history = []
@@ -12,20 +12,17 @@ let ended = false
 function miniExchange (req, res) {
   console.log('RECEIVED', req.body)
   const messageId = req.body.messageId
-  if (req.body.messageType === 'SOD') {
-    prevMessageId = messageId - 1
-  }
-
-  if (prevMessageId + 1 === messageId) {
-    prevMessageId += 1
+  if (expectedId === messageId) {
+    expectedId += 1
     processMessage(req.body)
-    let nextMessage = messageQueue.filter(message => message.messageId === prevMessageId + 1)
+    let nextMessage = messageQueue.filter(message => message.messageId === expectedId)
     while (nextMessage.length > 0) {
       processMessage(nextMessage[0])
-      prevMessageId += 1
-      nextMessage = messageQueue.filter(message => message.messageId === prevMessageId + 1)
+      expectedId += 1
+      nextMessage = messageQueue.filter(message => message.messageId === expectedId)
     }
   } else {
+    console.log('EXPECTED', expectedId, 'RECEIVED', req.body.messageId)
     messageQueue.push(req.body)
   }
 
@@ -125,7 +122,7 @@ function processEndMessage (message) {
   closePrice = {}
   orders = []
   messageQueue = []
-  prevMessageId = 0
+  expectedId = 1
 
   axios({
     method: 'post',
