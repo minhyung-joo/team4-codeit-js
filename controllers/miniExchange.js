@@ -10,6 +10,10 @@ let ended = false
 
 function miniExchange (req, res) {
   const messageId = req.body.messageId
+  if (req.body.messageType === 'SOD') {
+    prevMessageId = messageId - 1
+  }
+
   if (prevMessageId + 1 === messageId) {
     prevMessageId += 1
     processMessage(req.body)
