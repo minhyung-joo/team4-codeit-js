@@ -24,8 +24,9 @@ function defineContainer(json){
   let container = turf.polygon([[
           [coX, coY],
           [coX + width, coY],
+          [coX + width, coY + height],
           [coX, coY + height],
-          [coX + width, coY + height]
+          [coX, coY]
         ]])
 
   return container
@@ -45,8 +46,9 @@ function defineChild (json) {
     let child = turf.polygon([[
             [coX, coY],
             [coX + width, coY],
+            [coX + width, coY + height],
             [coX, coY + height],
-            [coX + width, coY + height]
+            [coX, coY]
           ]])
 
   } else if (json.square) {
@@ -57,8 +59,9 @@ function defineChild (json) {
     let child = turf.polygon([[
             [coX, coY],
             [coX + width, coY],
+            [coX + width, coY + width],
             [coX, coY + width],
-            [coX + width, coY + width]
+            [coX, coY]
           ]])
 
 
@@ -72,6 +75,9 @@ function defineChild (json) {
     circle_coords.push([(centerX + radius * Math.cos(2 * Math.PI * i / steps)),
                             (centerY + radius * Math.sin(2 * Math.PI * i / steps))])
     }
+    circle_coords.push([(centerX + radius * Math.cos(0)),
+                            (centerY + radius * Math.sin(0)])
+
     let child = turf.polygon([circle_coords])
 
     return child
