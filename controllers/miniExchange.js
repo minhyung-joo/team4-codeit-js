@@ -10,7 +10,7 @@ let closePrice = {}
 let ended = false
 
 function miniExchange (req, res) {
-  console.log(req.body)
+  console.log('RECEIVED', req.body)
   const messageId = req.body.messageId
   if (req.body.messageType === 'SOD') {
     prevMessageId = messageId - 1
@@ -29,6 +29,7 @@ function miniExchange (req, res) {
     messageQueue.push(req.body)
   }
 
+  console.log('MESSAGEQUEUE', messageQueue)
   if (ended) {
     return res.status(200).json(history)
   }
@@ -133,7 +134,8 @@ function processEndMessage (message) {
       runId: currentRunId,
       result: history
     }
-  }).then(response => console.log(response.data))
+  })
+  console.log('POSTED', history)
 }
 
 function tryMatching (message) {
