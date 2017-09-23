@@ -207,6 +207,11 @@ function tryMatching (message) {
         }
       })
   }
+
+  if (message.orderType === 'MKT') {
+    message.orderType = 'LMT'
+    message.price = closePrice[message.symbol]
+  }
 }
 
 function startChallenge (req, res) {
