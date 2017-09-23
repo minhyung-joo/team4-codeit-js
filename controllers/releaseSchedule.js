@@ -20,8 +20,16 @@ function releaseSchedule(req, res){
 
   pairArr.push([endIT,endIT])
 
+  // for(let k=0; k < pairArr.length; k++){
+  //   // interval all below startIT
+  //   if(moment(startIT).diff(moment(pairArr[k][1]))){
+  //     pairArr[k][1] = []
+  //   }
+  // }
 
   pairArr.sort((a, b) => (moment(a[0]).diff(b[0])))
+
+
 
   let subArr;
   if(moment(startIT).diff(moment(pairArr[0][0]), 'milliseconds') > 0.0){
@@ -41,21 +49,33 @@ function releaseSchedule(req, res){
       subArr.push([pairArr[j][0], pairArr[j][1]])
 
       subIdx++;
+
+      if(moment(pairArr[j][0]).diff(endIT, 'milliseconds') > 0.0){
+        subArr[subIdx][0] = endIT
+        subArr[subIdx][1] = endIT
+        continue
+      }
+
       if(max < moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]))){
         max = moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]));
       }
     }
 
-    if(moment(moment(pairArr[j][1])).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
-      subArr[subIdx][1] = pairArr[j][1]
+    // end point case
+    if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
+      // if(moment(endIT).diff(pairArr[j][1], 'milliseconds') > 0.0){
+      //   subArr[subIdx][1] = endIT
+      // } else {
+        subArr[subIdx][1] = pairArr[j][1]
+      // }
     }
 
   }
 
   max /= 1000;
 
-  return res.type('text/plain').status(200).send(max.toString())
   // return res.type('text/plain').status(200).send(max.toString())
+  return res.type('text/plain').status(200).send(max.toString())
   // return res.type('application/json').status(200).json(subArr)
 }
 
@@ -70,11 +90,11 @@ function getTime(str){
   let varFinal = moment(final);
 
   if(time.charAt(time.length-5) === '+'){
-    londonTime = varFinal.subtract(timeZone, 'hour');
+    londonTime = varFinal.subtract(timeZone, 'hour').format('LLLL');
   } else if(time.charAt(time.length-5) === '-'){
-    londonTime = varFinal.add(timeZone, 'hour');
+    londonTime = varFinal.add(timeZone, 'hour').format('LLLL');
   } else {
-    londonTime = varFinal;
+    londonTime = varFinal.format('LLLL');
   }
 
   // return moment(londonTime).format('LLLL')

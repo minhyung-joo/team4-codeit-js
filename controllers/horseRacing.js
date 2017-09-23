@@ -22,7 +22,7 @@ function horseRacing(req, res){
 
       for(let j=0; j < scoreHorse.length; j++){
         if(jsonArr[i].Horse === scoreHorse[j][0]){
-          scoreHorse[j][0] += 7;
+          scoreHorse[j][1] += 7;
         } else {
           scoreHorse.push([jsonArr[i].Horse, 7])
         }
@@ -30,7 +30,7 @@ function horseRacing(req, res){
 
       for(let j=0; j < scoreTrainer.length; j++){
         if(jsonArr[i].Trainer === scoreTrainer[j][0]){
-          scoreTrainer[j][0] += 7;
+          scoreTrainer[j][1] += 7;
         } else {
           scoreTrainer.push([jsonArr[i].Trainer, 7])
         }
@@ -38,64 +38,64 @@ function horseRacing(req, res){
 
       for(let j=0; j < scoreJockey.length; j++){
         if(jsonArr[i].Horse === scoreJockey[j][0]){
-          scoreJockey[j][0] += 7;
+          scoreJockey[j][1] += 7;
         } else {
           scoreJockey.push([jsonArr[i].Jockey, 7])
         }
       }
     }
 
-    if(jsonArr[i].Placing === "2"){
-      for(let j=0; j < scoreHorse.length; j++){
-        if(jsonArr[i].Horse === scoreHorse[j][0]){
-          scoreHorse[j][0] += 3;
-        } else {
-          scoreHorse.push([jsonArr[i].Horse, 3])
-        }
-      }
-
-      for(let j=0; j < scoreTrainer.length; j++){
-        if(jsonArr[i].Trainer === scoreTrainer[j][0]){
-          scoreTrainer[j][0] += 3;
-        } else {
-          scoreTrainer.push([jsonArr[i].Trainer, 3])
-        }
-      }
-
-      for(let j=0; j < scoreJockey.length; j++){
-        if(jsonArr[i].Horse === scoreJockey[j][0]){
-          scoreJockey[j][0] += 3;
-        } else {
-          scoreJockey.push([jsonArr[i].Jockey, 3])
-        }
-      }
-    }
-
-    if(jsonArr[i].Placing === "3"){
-      for(let j=0; j < scoreHorse.length; j++){
-        if(jsonArr[i].Horse === scoreHorse[j][0]){
-          scoreHorse[j][0] += 1;
-        } else {
-          scoreHorse.push([jsonArr[i].Horse, 1])
-        }
-      }
-
-      for(let j=0; j < scoreTrainer.length; j++){
-        if(jsonArr[i].Trainer === scoreTrainer[j][0]){
-          scoreTrainer[j][0] += 1;
-        } else {
-          scoreTrainer.push([jsonArr[i].Trainer, 1])
-        }
-      }
-
-      for(let j=0; j < scoreJockey.length; j++){
-        if(jsonArr[i].Horse === scoreJockey[j][0]){
-          scoreJockey[j][0] += 1;
-        } else {
-          scoreJockey.push([jsonArr[i].Jockey, 1])
-        }
-      }
-    }
+    // if(jsonArr[i].Placing === "2"){
+    //   for(let j=0; j < scoreHorse.length; j++){
+    //     if(jsonArr[i].Horse === scoreHorse[j][0]){
+    //       scoreHorse[j][1] += 3;
+    //     } else {
+    //       scoreHorse.push([jsonArr[i].Horse, 3])
+    //     }
+    //   }
+    //
+    //   for(let j=0; j < scoreTrainer.length; j++){
+    //     if(jsonArr[i].Trainer === scoreTrainer[j][0]){
+    //       scoreTrainer[j][1] += 3;
+    //     } else {
+    //       scoreTrainer.push([jsonArr[i].Trainer, 3])
+    //     }
+    //   }
+    //
+    //   for(let j=0; j < scoreJockey.length; j++){
+    //     if(jsonArr[i].Horse === scoreJockey[j][0]){
+    //       scoreJockey[j][1] += 3;
+    //     } else {
+    //       scoreJockey.push([jsonArr[i].Jockey, 3])
+    //     }
+    //   }
+    // }
+    //
+    // if(jsonArr[i].Placing === "3"){
+    //   for(let j=0; j < scoreHorse.length; j++){
+    //     if(jsonArr[i].Horse === scoreHorse[j][0]){
+    //       scoreHorse[j][1] += 1;
+    //     } else {
+    //       scoreHorse.push([jsonArr[i].Horse, 1])
+    //     }
+    //   }
+    //
+    //   for(let j=0; j < scoreTrainer.length; j++){
+    //     if(jsonArr[i].Trainer === scoreTrainer[j][0]){
+    //       scoreTrainer[j][1] += 1;
+    //     } else {
+    //       scoreTrainer.push([jsonArr[i].Trainer, 1])
+    //     }
+    //   }
+    //
+    //   for(let j=0; j < scoreJockey.length; j++){
+    //     if(jsonArr[i].Horse === scoreJockey[j][0]){
+    //       scoreJockey[j][1] += 1;
+    //     } else {
+    //       scoreJockey.push([jsonArr[i].Jockey, 1])
+    //     }
+    //   }
+    // }
   }
 
 
@@ -124,7 +124,7 @@ function horseRacing(req, res){
     ]
   }
 
-  return res.type('application/json').status(200).json(scoreJockey)
+  return res.type('application/json').status(200).json(scoreHorse)
 
 
 

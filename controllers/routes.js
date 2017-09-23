@@ -9,6 +9,7 @@ const startChallenge = require('./miniExchange').startChallenge
 const releaseSchedule = require('./releaseSchedule')
 const trainPlanner = require('./trainPlanner')
 const warehouseKeeper = require('./warehouseKeeper')
+const horse = require('./horseRacing')
 
 // Testing post endpoint
 router.post('/test', (req, res) => {
@@ -25,5 +26,6 @@ router.get('/mini-exchange/start', startChallenge)
 router.post('/releaseSchedule', releaseSchedule)
 router.post('/trainPlanner', trainPlanner)
 router.post('/warehouse-keeper/game-start', warehouseKeeper)
+router.post('/horse-racing', horse)
 
 module.exports = router
