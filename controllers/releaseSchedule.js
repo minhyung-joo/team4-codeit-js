@@ -9,20 +9,6 @@ function releaseSchedule(req, res){
   const startIT = getTime(inputArr[0].split(";")[1]);
   const endIT = getTime(inputArr[0].split(";")[2]);
 
-  // let day = moment('13:00:00').add(1, 'hour')
-  // let result = getTime(inputArr[0].split(";")[1]);
-  // let startArr = [startIT]
-  // let endArr = [endIT]
-  // let i = 1;
-  // for(i; i <= numTasks; i++){
-  //   let startTask = getTime(inputArr[i].split(";")[1])
-  //   let endTask = getTime(inputArr[i].split(";")[2])
-  //   startArr[i] = startTask
-  //   endArr[i] = endTask
-  // }
-  //
-  // startArr[i] = endIT
-  // endArr[i] = endIT
 
   let pairArr = [[startIT, startIT]]
   let i = 1;
@@ -38,7 +24,7 @@ function releaseSchedule(req, res){
   pairArr.sort((a, b) => (moment(a[0]).diff(b[0])))
 
   let subArr;
-  if(moment(startIT).diff(moment(pairArr[0][0]), 'seconds') > 0){
+  if(moment(startIT).diff(moment(pairArr[0][0]), 'milliseconds') > 0){
     subArr = [[startIT, pairArr[0][1]]]
   } else {
     subArr = [[pairArr[0][0], pairArr[0][1]]]
@@ -51,81 +37,41 @@ function releaseSchedule(req, res){
   for(let j=1; j < pairArr.length; j++){
 
     // when the searched interval's starting time is earlier than current sub array
-    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'seconds') > 0){
+    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') > 0){
       subArr.push([pairArr[j][0], pairArr[j][1]])
-        // nextIdx = false
+
       subIdx++;
       if(max < moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]))){
         max = moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]));
       }
     }
-    // nextIdx = true
-    if(moment(moment(pairArr[j][1])).diff(subArr[subIdx][1], 'seconds') > 0){
+
+    if(moment(moment(pairArr[j][1])).diff(subArr[subIdx][1], 'milliseconds') > 0){
       subArr[subIdx][1] = pairArr[j][1]
     }
 
   }
 
-  // for(let k=0; k < subArr.length-1; k++){
-  //   if(max )
-  // }
+  max /= 1000;
 
-
-
-  // startArr.sort(function(a,b){
-  //   let varA = moment(a)
-  //   let varB = moment(b)
-  //   if(varA.diff(varB)) return 1
-  //   if(varB.diff(varA)) return -1
-  //   return 0
-  // })
-  //
-  // endArr.sort(function(a,b){
-  //   let varA = moment(a)
-  //   let varB = moment(b)
-  //   if(varA.diff(varB)) return 1
-  //   if(varB.diff(varA)) return -1
-  //   return 0
-  // })
-
-
-  // let maxGap = 0;
-  // for(let j=0; j < startArr.length-1; j++){
-  //   let lowerBound = moment(endArr[j]);
-  //   let upperBound = moment(startArr[j+1]);
-  //   let gap = upperBound.diff(lowerBound, "seconds")
-  //   if(maxGap < gap){
-  //     maxGap = gap
-  //   }
-  // }
-
-
-
-  // return res.type('text/plain').status(200).send(moment(result).add(1, 'day').format('LLLL'))
   return res.type('text/plain').status(200).send(max.toString())
   // return res.type('application/json').status(200).json(subArr)
 }
-//
-// function sortStartingTime(input){
-//   for(let i=0; i < input.length-1; i++){
-//     if(input[i][0][0] input[i+1][0][0]
-//
-//   }
-// }
+
 
 function getTime(str){
   let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
-  let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 8);
+  let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let timeZone = time.substring(time.length-4, time.length-2)
   let londonTime = "";
 
   if(time.charAt(time.length-5) === '+'){
-    londonTime = moment(final).subtract(timeZone, 'hour').format('LLLL');
+    londonTime = moment(final).subtract(timeZone, 'hour');
   } else if(time.charAt(time.length-5) === '-'){
-    londonTime = moment(final).add(timeZone, 'hour').format('LLLL');
+    londonTime = moment(final).add(timeZone, 'hour');
   } else {
-    londonTime = moment(final).format('LLLL');
+    londonTime = moment(final);
   }
 
   return londonTime
