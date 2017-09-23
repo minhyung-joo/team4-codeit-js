@@ -114,7 +114,7 @@ function calcOverlap(container, child){
     let containerArea = container.width_c * container.height_c
 
     let area_uncovered
-    area_uncovered = round((containerArea - overlapArea), 2)
+    area_uncovered = round((containerArea - overlapArea), 3)
 
 
 
