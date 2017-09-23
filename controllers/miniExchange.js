@@ -28,10 +28,7 @@ function miniExchange (req, res) {
     messageQueue.push(req.body)
   }
 
-  console.log(messageQueue)
-  console.log(orders)
   if (ended) {
-    console.log(history)
     return res.status(200).json(history)
   }
   return res.status(200).end()
@@ -132,7 +129,7 @@ function processEndMessage (message) {
     method: 'post',
     url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
     data: history
-  })
+  }).then(response => console.log(response))
 }
 
 function tryMatching (message) {

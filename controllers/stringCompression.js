@@ -4,6 +4,8 @@ function stringCompression (req, res) {
   const data = req.body.data
   const mode = req.params.mode
 
+  console.log(data)
+
   let bits
   switch (mode) {
     case 'RLE':
