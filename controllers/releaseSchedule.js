@@ -33,7 +33,7 @@ function releaseSchedule(req, res){
 
   let nextIdx = false;
   let subIdx = 0;
-  let max = 0;
+  let max = 0.0;
   for(let j=1; j < pairArr.length; j++){
 
     // when the searched interval's starting time is earlier than current sub array
@@ -54,7 +54,8 @@ function releaseSchedule(req, res){
 
   max /= 1000;
 
-  return res.type('text/plain').status(200).send(max.toString())
+  return res.type('text/plain').status(200).send(getTime(startIT))
+  // return res.type('text/plain').status(200).send(max.toString())
   // return res.type('application/json').status(200).json(subArr)
 }
 
@@ -64,16 +65,19 @@ function getTime(str){
   let time = str.split(" ")[1]
   let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let timeZone = time.substring(time.length-4, time.length-2)
-  let londonTime = "";
+  let londonTime;
+
+  let varFinal = moment(final);
 
   if(time.charAt(time.length-5) === '+'){
-    londonTime = moment(final).subtract(timeZone, 'hour');
+    londonTime = varFinal.subtract(timeZone, 'hour');
   } else if(time.charAt(time.length-5) === '-'){
-    londonTime = moment(final).add(timeZone, 'hour');
+    londonTime = varFinal.add(timeZone, 'hour');
   } else {
-    londonTime = moment(final);
+    londonTime = varFinal;
   }
 
+  // return moment(londonTime).format('LLLL')
   return londonTime
 }
 
