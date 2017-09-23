@@ -4,7 +4,8 @@ const stringCompression = require('./stringCompression').stringCompression
 const sort = require('./sort')
 const heist = require('./jewelleryHeist')
 const calcEmptArea = require('./calcEmptArea2')
-const miniExchange = require('./miniExchange')
+const miniExchange = require('./miniExchange').miniExchange
+const startChallenge = require('./miniExchange').startChallenge
 const releaseSchedule = require('./releaseSchedule')
 
 // Testing post endpoint
@@ -18,6 +19,7 @@ router.post('/sort', sort)
 router.post('/heist', heist)
 router.post('/calculateemptyarea', calcEmptArea)
 router.post('/mini-exchange', miniExchange)
+router.get('/mini-exchange/start', startChallenge)
 router.post('/releaseSchedule', releaseSchedule)
 
 module.exports = router

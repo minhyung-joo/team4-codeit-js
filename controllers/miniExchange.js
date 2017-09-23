@@ -1,6 +1,7 @@
 const axios = require('axios')
 const _ = require('lodash')
 
+let currentRunId
 let prevMessageId = 0
 let messageQueue = []
 let orders = []
@@ -125,13 +126,14 @@ function processEndMessage (message) {
   messageQueue = []
   prevMessageId = 0
 
-  for (let order of history) {
-    axios({
-      method: 'post',
-      url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
-      data: order
-    }).then(response => console.log(response.data))
-  }
+  axios({
+    method: 'post',
+    url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
+    data: {
+      runId: currentRunId,
+      result: history
+    }
+  }).then(response => console.log(response.data))
 }
 
 function tryMatching (message) {
@@ -203,4 +205,15 @@ function tryMatching (message) {
   }
 }
 
-module.exports = miniExchange
+function startChallenge (req, res) {
+  axios({
+    method: 'post',
+    url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
+    data: history
+  }).then(response => { currentRunId = response.body.runId })
+
+  res.status(200).end()
+}
+
+module.exports.miniExchange = miniExchange
+module.exports.startChallenge = startChallenge
