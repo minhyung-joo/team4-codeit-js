@@ -24,7 +24,7 @@ function releaseSchedule(req, res){
   pairArr.sort((a, b) => (moment(a[0]).diff(b[0])))
 
   let subArr;
-  if(moment(startIT).diff(moment(pairArr[0][0]), 'milliseconds') > 0){
+  if(moment(startIT).diff(moment(pairArr[0][0]), 'milliseconds') > 0.0){
     subArr = [[startIT, pairArr[0][1]]]
   } else {
     subArr = [[pairArr[0][0], pairArr[0][1]]]
@@ -37,7 +37,7 @@ function releaseSchedule(req, res){
   for(let j=1; j < pairArr.length; j++){
 
     // when the searched interval's starting time is earlier than current sub array
-    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') > 0){
+    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') > 0.0){
       subArr.push([pairArr[j][0], pairArr[j][1]])
 
       subIdx++;
@@ -46,7 +46,7 @@ function releaseSchedule(req, res){
       }
     }
 
-    if(moment(moment(pairArr[j][1])).diff(subArr[subIdx][1], 'milliseconds') > 0){
+    if(moment(moment(pairArr[j][1])).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
       subArr[subIdx][1] = pairArr[j][1]
     }
 
