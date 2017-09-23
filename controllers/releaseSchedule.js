@@ -20,13 +20,13 @@ function releaseSchedule(req, res){
 
   // pairArr.push([endIT,endIT])
 
-  // for(let k=0; k < pairArr.length; k++){
-  //   // interval all below startIT
-  //   if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
-  //     delete pairArr[k][1];
-  //     delete pairArr[k][0];
-  //   }
-  // }
+  for(let k=0; k < pairArr.length; k++){
+    // interval all below startIT
+    if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
+      delete pairArr[k][1];
+      delete pairArr[k][0];
+    }
+  }
 
   pairArr.sort((a, b) => (moment(a[0]).diff(b[0])))
 
