@@ -22,10 +22,13 @@ function releaseSchedule(req, res){
 
   for(let k=0; k < pairArr.length; k++){
     // interval all below startIT
-    if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
-      delete pairArr[k][1];
-      delete pairArr[k][0];
+    if(moment(pairArr[k][1]).diff(endIT, 'milliseconds') > 0.0){
+      pairArr[k][1] = endIT
     }
+    if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
+      pairArr[k][0] = endIT
+    }
+
   }
 
   pairArr.sort((a, b) => (moment(a[0]).diff(b[0])))
@@ -44,7 +47,9 @@ function releaseSchedule(req, res){
   let subIdx = 0;
   let max = 0.0;
   for(let j=1; j < pairArr.length; j++){
-
+    if(pairArr[j][0] === null){
+      break;
+    }
     // when the searched interval's starting time is earlier than current sub array
     if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') > 0.0){
       subArr.push([pairArr[j][0], pairArr[j][1]])
@@ -62,12 +67,12 @@ function releaseSchedule(req, res){
 
     // end point case
     if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
-      if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
-        subArr[subIdx][1] = endIT
-
-      } else {
+      // if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
+      //   subArr[subIdx][1] = endIT
+      //
+      // } else {
         subArr[subIdx][1] = pairArr[j][1]
-      }
+      // }
     }
 
 
@@ -76,8 +81,8 @@ function releaseSchedule(req, res){
   max /= 1000;
 
   // return res.type('text/plain').status(200).send(max.toString())
-  return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('application/json').status(200).json(subArr)
+  // return res.type('text/plain').status(200).send(max.toString())
+  return res.type('application/json').status(200).json(subArr)
 }
 
 
