@@ -1,7 +1,7 @@
 'use strict'
 
 function sortNumbers (req, res) {
-  let data = req.body.data
+  let data = req.body
 
   if (data.constructor !== Array) {
     return res.status(400).end()
