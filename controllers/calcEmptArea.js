@@ -8,8 +8,9 @@ function calcEmptArea (req, res) {
   let container = defineContainer(data)
   let child = defineChild(data)
 
-  let results = calcOverlap(container, child)
+  let results = calcOverlap(data, container, child)
 
+  console.log(results)
   return res.type('text/plain').status(200).send(results)
 }
 
@@ -21,21 +22,28 @@ function defineContainer(json){
   let coX = json.container.coordinate.X
   let coY = json.container.coordinate.Y
 
+
+  console.log(coX)
+  console.log(coY)
+  console.log(width)
+  console.log(height)
+
   let container = turf.polygon([[
           [coX, coY],
-          [coX + width, coY],
-          [coX + width, coY + height],
           [coX, coY + height],
+          [coX + width, coY + height],
+          [coX + width, coY],
           [coX, coY]
         ]])
 
+  console.log(container.geometry.coordinates[0])
+  var area = width * height
   return container
 }
 
 
 function defineChild (json) {
-
-
+  let child
 
   if (json.rectangle) {
     let width = json.rectangle.width
@@ -43,24 +51,32 @@ function defineChild (json) {
     let coX = json.rectangle.coordinate.X
     let coY = json.rectangle.coordinate.Y
 
-    let child = turf.polygon([[
+
+    console.log(coX)
+    console.log(coY)
+    console.log(width)
+    console.log(height)
+
+    child = turf.polygon([[
             [coX, coY],
-            [coX + width, coY],
-            [coX + width, coY + height],
             [coX, coY + height],
+            [coX + width, coY + height],
+            [coX + width, coY],
             [coX, coY]
           ]])
+
+    console.log(child.geometry.coordinates[0])
 
   } else if (json.square) {
     let width = json.square.width
     let coX = json.square.coordinate.X
     let coY = json.square.coordinate.Y
 
-    let child = turf.polygon([[
+    child = turf.polygon([[
             [coX, coY],
-            [coX + width, coY],
-            [coX + width, coY + width],
             [coX, coY + width],
+            [coX + width, coY + width],
+            [coX + width, coY],
             [coX, coY]
           ]])
 
@@ -76,23 +92,34 @@ function defineChild (json) {
                             (centerY + radius * Math.sin(2 * Math.PI * i / steps))])
     }
     circle_coords.push([(centerX + radius * Math.cos(0)),
-                            (centerY + radius * Math.sin(0)])
+                            (centerY + radius * Math.sin(0))])
 
-    let child = turf.polygon([circle_coords])
+    child = turf.polygon([circle_coords])
 
-    return child
+  }
 
+
+
+  return child
 }
 
 
-function calcOverlap(container, child){
+function calcOverlap(json, container, child){
+
+  let width = json.container.width
+  let height = json.container.height
 
   let intersection = turf.intersect(container, child)
 
   let area_intersection = geojsonArea.geometry(intersection.geometry)
-  let area_container = geojsonArea.geometry(container)
+  console.log(area_intersection)
+  let area_container = geojsonArea.geometry(container.geometry)
+  console.log(area_container)
 
-  let area_uncovered = area_container - area_intersection
+  let ratio = (area_container-area_intersection) / area_container
+
+  let area_uncovered = width * height * ratio
+
   return area_uncovered
 }
 
