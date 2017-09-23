@@ -125,11 +125,13 @@ function processEndMessage (message) {
   messageQueue = []
   prevMessageId = 0
 
-  axios({
-    method: 'post',
-    url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
-    data: history
-  }).then(response => console.log(response))
+  for (let order of history) {
+    axios({
+      method: 'post',
+      url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
+      data: order
+    }).then(response => console.log(response.data))
+  }
 }
 
 function tryMatching (message) {
