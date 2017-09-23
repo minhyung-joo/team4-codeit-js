@@ -3,7 +3,7 @@ const router = new express.Router()
 const stringCompression = require('./stringCompression').stringCompression
 const sort = require('./sort')
 const heist = require('./jewelleryHeist')
-const calcEmptArea = require('./calcEmptArea')
+const calcEmptArea = require('./calcEmptArea2')
 const miniExchange = require('./miniExchange')
 
 // Testing post endpoint
