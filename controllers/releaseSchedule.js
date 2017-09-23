@@ -66,6 +66,8 @@ function releaseSchedule(req, res){
 
   }
 
+  max /= 1000;
+
   // for(let k=0; k < subArr.length-1; k++){
   //   if(max )
   // }
