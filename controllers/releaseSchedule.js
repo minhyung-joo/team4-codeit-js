@@ -3,6 +3,7 @@ var moment = require('moment');
 // moment().format();
 
 function releaseSchedule(req, res){
+  console.log(req.body)
   const inputArr = req.body
   const numTasks = inputArr[0].split(";")[0];
   const startIT = getTime(inputArr[0].split(";")[1]);
@@ -17,11 +18,28 @@ function releaseSchedule(req, res){
     let startTask = getTime(inputArr[i].split(";")[1])
     let endTask = getTime(inputArr[i].split(";")[2])
     startArr[i] = startTask
-    endArr[i] = endTask;
+    endArr[i] = endTask
   }
 
-  startArr[i] = startIT
+  startArr[i] = endIT
   endArr[i] = endIT
+
+  // startArr.sort(function(a,b){
+  //   let varA = moment(a)
+  //   let varB = moment(b)
+  //   if(varA.diff(varB)) return 1
+  //   if(varB.diff(varA)) return -1
+  //   return 0
+  // })
+  //
+  // endArr.sort(function(a,b){
+  //   let varA = moment(a)
+  //   let varB = moment(b)
+  //   if(varA.diff(varB)) return 1
+  //   if(varB.diff(varA)) return -1
+  //   return 0
+  // })
+
 
   let maxGap = 0;
   for(let j=0; j < startArr.length-1; j++){
@@ -33,16 +51,11 @@ function releaseSchedule(req, res){
     }
   }
 
+
+
   // return res.type('text/plain').status(200).send(moment(result).add(1, 'day').format('LLLL'))
   return res.type('text/plain').status(200).send(maxGap.toString())
   // return res.type('application/json').status(200).json(startArr)
-}
-
-function sortByKey(array, key) {
-    return array.sort(function(a, b) {
-        var x = a[key]; var y = b[key];
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-    });
 }
 
 function getTime(str){
