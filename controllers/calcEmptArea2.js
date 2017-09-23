@@ -9,7 +9,7 @@ function calcEmptArea (req, res) {
   let results = calcOverlap(container, child)
 
   console.log(results)
-  return res.type('text/plain').status(200).send(results)
+  return res.type('text/plain').status(200).send(results.toString())
 }
 
 function defineContainer(json){
