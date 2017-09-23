@@ -208,8 +208,11 @@ function tryMatching (message) {
 function startChallenge (req, res) {
   axios({
     method: 'post',
-    url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
-    data: history
+    url: 'https://cis2017-coordinator.herokuapp.com/api/evaluate',
+    data: {
+      team: 'ZzamVibe',
+      challenge: 'Mini Exchange'
+    }
   }).then(response => { currentRunId = response.body.runId })
 
   res.status(200).end()
