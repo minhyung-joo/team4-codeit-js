@@ -23,16 +23,21 @@ function defineContainer(json){
 
   container = {
     "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [[
-          [coX, coY],
-          [coX + width, coY],
-          [coX, coY + height],
-          [coX + width, coY + height]
-        ]]
-      }
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [coX, coY],
+        [coX + width, coY],
+        [coX, coY + height],
+        [coX + width, coY + height]
+      ]]
+    },
+    "properties": {
+      "name": "Container"
+    }
   }
+
+  console.log(container)
 
   return container
 }
@@ -49,15 +54,18 @@ function defineChild (json) {
 
     child = {
       "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [[
-            [coX, coY],
-            [coX + width, coY],
-            [coX, coY + height],
-            [coX + width, coY + height]
-          ]]
-        }
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [coX, coY],
+          [coX + width, coY],
+          [coX, coY + height],
+          [coX + width, coY + height]
+        ]]
+      },
+      "properties": {
+        "name": "Child"
+      }
     }
 
   } else if (json.square) {
@@ -66,15 +74,18 @@ function defineChild (json) {
     let coY = json.square.coordinate.Y
     child = {
       "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [[
-            [coX, coY],
-            [coX + width, coY],
-            [coX, coY + width],
-            [coX + width, coY + width]
-          ]]
-        }
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [coX, coY],
+          [coX + width, coY],
+          [coX, coY + width],
+          [coX + width, coY + width]
+        ]]
+      },
+      "properties": {
+        "name": "Child"
+      }
     }
 
   } else {
@@ -89,16 +100,21 @@ function defineChild (json) {
     }
     child = {
       "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [[
-            circle_coords
-          ]]
-        }
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          circle_coords
+        ]]
+      },
+      "properties": {
+        "name": "Child"
+      }
     }
   }
 
-    return child
+  console.log(child)
+
+  return child
 
 }
 
@@ -107,7 +123,7 @@ function calcOverlap(container, child){
   let intersection = turf.intersect(container, child)
 
   let area_intersection = geojsonArea.geometry(intersection.geometry)
-  let area_container = geojsonArea.geometry(container)
+  let area_container = geojsonArea.geometry(container.geometry)
 
   let area_uncovered = area_container - area_intersection
   return area_uncovered
