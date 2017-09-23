@@ -2,7 +2,6 @@ const axios = require('axios')
 const _ = require('lodash')
 
 let currentRunId
-let expectedId = 1
 let messageQueue = []
 let orders = []
 let history = []
@@ -11,26 +10,35 @@ let ended = false
 
 function miniExchange (req, res) {
   console.log('RECEIVED', req.body)
-  const messageId = req.body.messageId
-  if (expectedId === messageId) {
-    expectedId += 1
-    processMessage(req.body)
-    let nextMessage = messageQueue.filter(message => message.messageId === expectedId)
-    while (nextMessage.length > 0) {
-      processMessage(nextMessage[0])
-      expectedId += 1
-      nextMessage = messageQueue.filter(message => message.messageId === expectedId)
+  messageQueue.push(req.body)
+  if (checkTransaction(messageQueue)) {
+    for (let message of messageQueue) {
+      processMessage(message)
     }
-  } else {
-    console.log('EXPECTED', expectedId, 'RECEIVED', req.body.messageId)
-    messageQueue.push(req.body)
   }
 
-  console.log('MESSAGEQUEUE', messageQueue)
   if (ended) {
     return res.status(200).json(history)
   }
   return res.status(200).end()
+}
+
+function checkTransaction (queue) {
+  queue.sort((a, b) => a.messageId - b.messageId)
+  const first = queue[0]
+  const last = queue[queue.length - 1]
+  console.log(queue)
+  console.log(first.messageType === 'SOD')
+  console.log(last.messageType === 'EOD')
+  console.log((last.messageId - first.messageId + 1 === queue.length))
+  if (
+    first.messageType === 'SOD' &&
+    last.messageType === 'EOD' &&
+    (last.messageId - first.messageId + 1 === queue.length)
+  ) {
+    return true
+  }
+  return false
 }
 
 function processMessage (message) {
@@ -122,7 +130,6 @@ function processEndMessage (message) {
   closePrice = {}
   orders = []
   messageQueue = []
-  expectedId = 1
 
   axios({
     method: 'post',
