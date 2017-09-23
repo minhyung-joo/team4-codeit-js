@@ -43,26 +43,28 @@ function RLE (str) {
     compressed += counter
   }
   compressed += lastChar
-  console.log(compressed)
 
   return compressed.length * 8
 }
 
 function LZW (str) {
-  let compressed
+  let compressed = ''
   let lastSubstr = str[0]
   let dictionary = {}
+  let counter = 1
 
   for (let i = 1; i < str.length; i++) {
     let substr = lastSubstr + str[i]
     if (dictionary[substr]) {
       lastSubstr = substr
     } else {
-
+      compressed += counter
+      dictionary[substr] = counter++
+      lastSubstr = str[i]
     }
   }
 
-  return compressed.length * 12
+  return (compressed.length + 1) * 12
 }
 
 function WDE (str) {
