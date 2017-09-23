@@ -22,13 +22,16 @@ function defineContainer(json){
   let coY = json.container.coordinate.Y
 
   container = {
-    "shape": "rectangle",
-    "coordinates": [
-      [coX, coY],
-      [coX + width, coY],
-      [coX, coY + height],
-      [coX + width, coY + height]
-    ]
+    "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [coX, coY],
+          [coX + width, coY],
+          [coX, coY + height],
+          [coX + width, coY + height]
+        ]]
+      }
   }
 
   return container
@@ -45,13 +48,16 @@ function defineChild (json) {
     let coY = json.rectangle.coordinate.Y
 
     child = {
-      "shape": "rectangle",
-      "coordinates": [
-        [coX, coY],
-        [coX + width, coY],
-        [coX, coY + height],
-        [coX + width, coY + height]
-      ]
+      "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [coX, coY],
+            [coX + width, coY],
+            [coX, coY + height],
+            [coX + width, coY + height]
+          ]]
+        }
     }
 
   } else if (json.square) {
@@ -59,25 +65,38 @@ function defineChild (json) {
     let coX = json.square.coordinate.X
     let coY = json.square.coordinate.Y
     child = {
-      "shape": "square",
-      "coordinates": [
-        [coX, coY],
-        [coX + width, coY],
-        [coX, coY + width],
-        [coX + width, coY + width]
-      ]
+      "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [coX, coY],
+            [coX + width, coY],
+            [coX, coY + width],
+            [coX + width, coY + width]
+          ]]
+        }
     }
+
   } else {
     let centerX = json.circle.center.X
     let centerY = json.circle.center.Y
     let radius = json.circle.radius
     let steps = 1000
+    let circle_coords = []
     for (let i = 0; i < steps; i++) {
-    child.coordinates = [(centerX + radius * Math.cos(2 * Math.PI * i / steps)),
-                            (centerY + radius * Math.sin(2 * Math.PI * i / steps))]
+    circle_coords.push([(centerX + radius * Math.cos(2 * Math.PI * i / steps)),
+                            (centerY + radius * Math.sin(2 * Math.PI * i / steps))])
     }
-    child.shape = "circle"
-  } // what if a different shape type is given?
+    child = {
+      "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            circle_coords
+          ]]
+        }
+    }
+  }
 
     return child
 
