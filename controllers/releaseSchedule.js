@@ -52,7 +52,6 @@ function releaseSchedule(req, res){
 
       if(moment(pairArr[j][0]).diff(endIT, 'milliseconds') > 0.0){
         subArr[subIdx][0] = endIT
-        subArr[subIdx][1] = endIT
         continue
       }
 
@@ -63,11 +62,11 @@ function releaseSchedule(req, res){
 
     // end point case
     if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
-      // if(moment(endIT).diff(pairArr[j][1], 'milliseconds') > 0.0){
-      //   subArr[subIdx][1] = endIT
-      // } else {
+      if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
+        subArr[subIdx][1] = endIT
+      } else {
         subArr[subIdx][1] = pairArr[j][1]
-      // }
+      }
     }
 
   }
