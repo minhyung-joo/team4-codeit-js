@@ -193,6 +193,10 @@ function tryMatching (message) {
     })
 
     closePrice[message.symbol] = bestPrice
+    if (message.orderType === 'MKT') {
+      message.orderType = 'LMT'
+      message.price = closePrice[message.symbol]
+    }
     standingOrders = orders
       .filter(order => (order.side !== message.side && order.state === 'LIVE'))
       .sort((a, b) => {
@@ -202,11 +206,6 @@ function tryMatching (message) {
           return b.price - a.price
         }
       })
-  }
-
-  if (message.orderType === 'MKT') {
-    message.orderType = 'LMT'
-    message.price = closePrice[message.symbol]
   }
 }
 
