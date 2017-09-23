@@ -9,6 +9,7 @@ let closePrice = {}
 let ended = false
 
 function miniExchange (req, res) {
+  console.log(req.body)
   const messageId = req.body.messageId
   if (req.body.messageType === 'SOD') {
     prevMessageId = messageId - 1
