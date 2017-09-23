@@ -85,7 +85,7 @@ function defineChild (json) {
     let centerX = json.circle.center.X
     let centerY = json.circle.center.Y
     let radius = json.circle.radius
-    let steps = 1000
+    let steps = 10000
     let circle_coords = []
     for (let i = 0; i < steps; i++) {
     circle_coords.push([(centerX + radius * Math.cos(2 * Math.PI * i / steps)),
