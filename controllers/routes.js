@@ -3,6 +3,7 @@ const router = new express.Router()
 const stringCompression = require('./stringCompression').stringCompression
 const sort = require('./sort')
 const heist = require('./jewelleryHeist')
+const calcEmptArea = require('./calcEmptArea')
 
 // Testing post endpoint
 router.post('/test', (req, res) => {
@@ -13,5 +14,6 @@ router.post('/test', (req, res) => {
 router.post('/stringcompression/:mode', stringCompression)
 router.post('/sort', sort)
 router.post('/heist', heist)
+router.post('/calculateemptyarea', calcEmptArea)
 
 module.exports = router

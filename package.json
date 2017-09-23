@@ -19,7 +19,9 @@
   "homepage": "https://github.com/minhyung-joo/team4-codeit-js#readme",
   "dependencies": {
     "body-parser": "^1.18.1",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "geojson-area": "^0.2.1",
+    "turf": "^3.0.14"
   },
   "devDependencies": {
     "mocha": "^3.5.3"

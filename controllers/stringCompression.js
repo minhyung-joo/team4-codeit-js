@@ -23,6 +23,10 @@ function stringCompression (req, res) {
 }
 
 function RLE (str) {
+  if (str.length <= 0) {
+    return 0
+  }
+
   let compressed = ''
   let lastChar = str[0]
   let counter = 1
@@ -48,6 +52,10 @@ function RLE (str) {
 }
 
 function LZW (str) {
+  if (str.length <= 0) {
+    return 0
+  }
+
   let compressed = ''
   let lastSubstr = str[0]
   let dictionary = {}
@@ -68,6 +76,10 @@ function LZW (str) {
 }
 
 function WDE (str) {
+  if (str.length <= 0) {
+    return 0
+  }
+
   let bits = 0
   let substr = ''
   let dictionary = {}

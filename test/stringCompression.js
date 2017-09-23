@@ -10,6 +10,30 @@ describe('stringCompression', () => {
       const bits = RLE(str)
       assert.strictEqual(bits, 72)
     })
+
+    it('should return 0 when passed empty string', () => {
+      const str = ''
+      const bits = RLE(str)
+      assert.strictEqual(bits, 0)
+    })
+
+    it('should return correct bits with 2 digits', () => {
+      const str = 'RRRRRRRRRRRRR'
+      const bits = RLE(str)
+      assert.strictEqual(bits, 24)
+    })
+
+    it('should return correct bits with 2 letters with 2 digits', () => {
+      const str = 'RRRRRRRRRRRRRLLLLLLLLLLLUUIIIIT'
+      const bits = RLE(str)
+      assert.strictEqual(bits, 88)
+    })
+
+    it('should return original string', () => {
+      const str = 'ASDFQWERZXCV'
+      const bits = RLE(str)
+      assert.strictEqual(bits, 96)
+    })
   })
 
   describe('LZW', () => {
