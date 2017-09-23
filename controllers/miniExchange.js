@@ -125,7 +125,7 @@ function processEndMessage (message) {
 
   axios({
     method: 'post',
-    url: 'https://cis2017-coordinator.herokuapp.com/api/evaluate/result',
+    url: 'https://cis2017-mini-exchange.herokuapp.com/evaluate/result',
     data: history
   })
 }
