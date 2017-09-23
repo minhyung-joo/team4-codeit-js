@@ -35,7 +35,7 @@ function RLE (str) {
       counter++
     } else {
       if (counter > 1) {
-        compressed += counter
+        compressed += '1'
       }
       compressed += lastChar
       lastChar = str[i]
@@ -44,7 +44,7 @@ function RLE (str) {
   }
 
   if (counter > 1) {
-    compressed += counter
+    compressed += '1'
   }
   compressed += lastChar
 
