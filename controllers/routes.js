@@ -7,6 +7,7 @@ const calcEmptArea = require('./calcEmptArea2')
 const miniExchange = require('./miniExchange').miniExchange
 const startChallenge = require('./miniExchange').startChallenge
 const releaseSchedule = require('./releaseSchedule')
+const trainPlanner = require('./trainPlanner')
 
 // Testing post endpoint
 router.post('/test', (req, res) => {
@@ -21,5 +22,6 @@ router.post('/calculateemptyarea', calcEmptArea)
 router.post('/mini-exchange', miniExchange)
 router.get('/mini-exchange/start', startChallenge)
 router.post('/releaseSchedule', releaseSchedule)
+router.post('/trainPlanner', trainPlanner)
 
 module.exports = router

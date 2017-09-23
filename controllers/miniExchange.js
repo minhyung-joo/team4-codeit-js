@@ -213,7 +213,10 @@ function startChallenge (req, res) {
       team: 'ZzamVibe',
       challenge: 'Mini Exchange'
     }
-  }).then(response => { currentRunId = response.data.runId })
+  }).then(response => {
+    currentRunId = response.data.runId
+    console.log(currentRunId)
+  })
 
   res.status(200).end()
 }
