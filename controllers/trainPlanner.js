@@ -70,6 +70,8 @@ function trainRoute (req, res) {
     }
   }
 
+  console.log('stations after break', stations)
+
   const destination = findStation(stations, destinationName)
   let maxPassengers = 0
   let maxLine
