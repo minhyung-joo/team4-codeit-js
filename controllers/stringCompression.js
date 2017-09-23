@@ -19,7 +19,7 @@ function stringCompression (req, res) {
       return res.status(400).end()
   }
 
-  return res.type('text/plain').status(200).send(bits)
+  return res.type('text/plain').status(200).send(bits.toString())
 }
 
 function RLE (str) {
