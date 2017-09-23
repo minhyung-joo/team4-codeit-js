@@ -22,9 +22,9 @@ describe('stringCompression', () => {
 
   describe('WDE', () => {
     it('should return correct bits', () => {
-      const str = 'HOW MUCH WOOD COULD A WOOD CHUCK CHUCK IF A WOOD CHUCK COULD CHUCK'
+      const str = 'HOW MUCH WOOD COULD A WOOD CHUCK CHUCK IF A WOOD CHUCK COULD CHUCK WOOD'
       const bits = WDE(str)
-      assert.strictEqual(bits, 72)
+      assert.strictEqual(bits, 540)
     })
   })
 })

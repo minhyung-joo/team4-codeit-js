@@ -1,7 +1,7 @@
 'use strict'
 
 function stringCompression (req, res) {
-  const data = req.body.Data
+  const data = req.body.data
   const mode = req.params.mode
 
   let bits
@@ -68,9 +68,36 @@ function LZW (str) {
 }
 
 function WDE (str) {
-  let compressed
+  let bits = 0
+  let substr = ''
+  let dictionary = {}
+  for (let i = 0; i < str.length; i++) {
+    if (isLetter(str[i])) {
+      substr += str[i]
+    } else {
+      dictionary[substr] = substr.length
+      bits += 12
+      if (substr !== '') {
+        bits += 12
+        substr = ''
+      }
+    }
+  }
 
-  return compressed.length
+  if (substr !== '') {
+    bits += 12
+  }
+
+  let dictionarySize = 0
+  for (let entry in dictionary) {
+    dictionarySize += dictionary[entry] * 8
+  }
+
+  return bits + dictionarySize
+}
+
+function isLetter (str) {
+  return str.length === 1 && str.match(/[a-zA-Z]/i)
 }
 
 module.exports.stringCompression = stringCompression
