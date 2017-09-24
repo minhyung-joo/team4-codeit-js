@@ -2,9 +2,6 @@ function trainRoute (req, res) {
   let destinationName = req.body.destination
   let stations = req.body.stations
 
-  console.log(stations)
-  console.log(destinationName)
-
   let index = 0
   const vertexTable = {}
   stations.forEach(station => {
@@ -69,10 +66,7 @@ function trainRoute (req, res) {
         stations = stations.filter(s => s.name !== station.name)
       }
     }
-    console.log(stations)
   }
-
-  console.log('stations after break', stations)
 
   const destination = findStation(stations, destinationName)
   let maxPassengers = 0

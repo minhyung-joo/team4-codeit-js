@@ -1,5 +1,7 @@
 'use strict'
 
+const lzwCompress = require('lzwcompress')
+
 function stringCompression (req, res) {
   const data = req.body.data
   const mode = req.params.mode
@@ -59,23 +61,8 @@ function LZW (str) {
     return 0
   }
 
-  let compressed = ''
-  let lastSubstr = str[0]
-  let dictionary = {}
-  let counter = 1
-
-  for (let i = 1; i < str.length; i++) {
-    let substr = lastSubstr + str[i]
-    if (dictionary[substr]) {
-      lastSubstr = substr
-    } else {
-      compressed += counter
-      dictionary[substr] = counter++
-      lastSubstr = str[i]
-    }
-  }
-
-  return (compressed.length + 1) * 12
+  let compressed = lzwCompress.pack(str)
+  return compressed.length * 12
 }
 
 function WDE (str) {
@@ -90,16 +77,25 @@ function WDE (str) {
     if (isLetter(str[i])) {
       substr += str[i]
     } else {
-      dictionary[substr] = substr.length
-      bits += 12
-      if (substr !== '') {
+      if (Object.keys(dictionary).length <= 4096) {
         bits += 12
-        substr = ''
+        if (substr !== '') {
+          dictionary[substr] = substr.length
+          bits += 12
+          substr = ''
+        }
+      } else {
+        if (substr !== '') {
+          bits += substr.length * 12
+          substr = ''
+        }
+        bits += 12
       }
     }
   }
 
   if (substr !== '') {
+    dictionary[substr] = substr.length
     bits += 12
   }
 

@@ -46,9 +46,13 @@ describe('stringCompression', () => {
 
   describe('WDE', () => {
     it('should return correct bits', () => {
-      const str = 'HOW MUCH WOOD COULD A WOOD CHUCK CHUCK IF A WOOD CHUCK COULD CHUCK WOOD'
-      const bits = WDE(str)
+      let str = 'HOW MUCH WOOD COULD A WOOD CHUCK CHUCK IF A WOOD CHUCK COULD CHUCK WOOD'
+      let bits = WDE(str)
       assert.strictEqual(bits, 540)
+
+      str = 'well well now.!!'
+      bits = WDE(str)
+      assert.strictEqual(bits, 96 + 32 + 24)
     })
   })
 })
