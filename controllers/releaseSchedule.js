@@ -55,7 +55,7 @@ function releaseSchedule(req, res){
   for(let j=1; j < pairArr.length; j++){
 
     // when the searched interval's starting time is earlier than current sub array
-    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') > 0.0){
+    if( moment(pairArr[j][0]).diff(moment(subArr[subIdx][1]), 'milliseconds') >= 0.0){
       subArr.push([pairArr[j][0], pairArr[j][1]])
 
       subIdx++;
@@ -68,7 +68,7 @@ function releaseSchedule(req, res){
     }
 
     // end point case
-    if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') > 0.0){
+    if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'milliseconds') >= 0.0){
       // if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
       //   subArr[subIdx][1] = endIT
       //
