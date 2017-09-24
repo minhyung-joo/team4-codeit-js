@@ -90,9 +90,7 @@ function processQuantityMessage (message) {
       order.messageId = message.messageId
     }
     order.openQuantity += message.quantity
-    if (order.openQuantity > order.quantity) {
-      order.quantity = order.openQuantity
-    }
+    order.quantity += message.quantity
     if (order.openQuantity === 0) {
       order.state = 'FILLED'
     } else {
@@ -166,6 +164,7 @@ function tryMatching (message) {
 
     if (message.orderType === 'MKT' && !message.price) {
       message.price = bestPrice
+      console.log(bestPrice)
     }
     if (message.orderType === 'LMT') {
       if (
@@ -219,7 +218,9 @@ function tryMatching (message) {
 
   if (message.orderType === 'MKT') {
     message.orderType = 'LMT'
-    message.price = closePrice[message.symbol]
+    if (!message.price) {
+      message.price = closePrice[message.symbol]
+    }
   }
 }
 
