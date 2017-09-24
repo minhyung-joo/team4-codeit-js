@@ -90,9 +90,7 @@ function processQuantityMessage (message) {
       order.messageId = message.messageId
     }
     order.openQuantity += message.quantity
-    if (order.openQuantity > order.quantity) {
-      order.quantity = order.openQuantity
-    }
+    order.quantity += message.quantity
     if (order.openQuantity === 0) {
       order.state = 'FILLED'
     } else {
