@@ -1,6 +1,5 @@
 'use strict'
 var moment = require('moment');
-// moment().format();
 
 function releaseSchedule(req, res){
   console.log(req.body)
@@ -9,6 +8,9 @@ function releaseSchedule(req, res){
   const startIT = getTime(inputArr[0].split(";")[1]);
   const endIT = getTime(inputArr[0].split(";")[2]);
 
+  if(numTasks === 0){
+    return res.type('text/plain').status(200).send(endIT.diff(startIT, 'milliseconds'))
+  }
 
   let pairArr = [[startIT, startIT]]
   let i = 1;
@@ -85,32 +87,34 @@ function releaseSchedule(req, res){
   }
 
 
-  max /= 1000;
+  // Math.round((max/1000)*100)/100;;
 
-  // return res.type('text/plain').status(200).send(max.toString())
+  max /= 1000.0
+
   return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('application/json').status(200).json(subArr)
+  // return res.type('text/plain').status(200).send(getTime(inputArr[0].split(";")[1]))
+  // return res.type('application/json').status(200).json(pairArr)
 }
 
 
 function getTime(str){
   let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
-  let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
+  // let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
+  let final = moment(str, "DD-MM-YYYY HH:mm:ss.SSS")
   let timeZone = time.substring(time.length-4, time.length-2)
   let londonTime;
 
-  let varFinal = moment(final);
+  // let varFinal = moment(final);
 
   if(time.charAt(time.length-5) === '+'){
-    londonTime = varFinal.subtract(timeZone, 'hour').format('LLLL');
+    londonTime = final.subtract(timeZone, 'hour');
   } else if(time.charAt(time.length-5) === '-'){
-    londonTime = varFinal.add(timeZone, 'hour').format('LLLL');
+    londonTime = final.add(timeZone, 'hour');
   } else {
-    londonTime = varFinal.format('LLLL');
+    londonTime = final;
   }
 
-  // return moment(londonTime).format('LLLL')
   return londonTime
 }
 
