@@ -91,14 +91,14 @@ function releaseSchedule(req, res){
 
   max /= 1000.0
 
-  return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('text/plain').status(200).send(getTime(inputArr[0].split(";")[1]))
+  // return res.type('text/plain').status(200).send(max.toString())
+  return res.type('text/plain').status(200).send(getTime(inputArr[0].split(";")[1]))
   // return res.type('application/json').status(200).json(pairArr)
 }
 
 
 function getTime(str){
-  let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
+  // let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
   // let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let final = moment(str, "DD-MM-YYYY HH:mm:ss.SSS")

@@ -1,5 +1,7 @@
 'use strict'
 
+let Timsort = require('timsort')
+
 function sortNumbers (req, res) {
   let data = req.body
 
@@ -7,8 +9,8 @@ function sortNumbers (req, res) {
     return res.status(400).end()
   }
 
-  let sorted = sortArray(data)
-
+  // let sorted = sortArray(data)
+  let sorted = Timsort(data)
   return res.type('application/json').status(200).json(sorted)
 }
 
