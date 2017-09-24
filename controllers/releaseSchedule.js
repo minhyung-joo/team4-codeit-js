@@ -60,9 +60,7 @@ function releaseSchedule(req, res){
       //   subArr[subIdx][0] = endIT
       //   continue
       // }
-      if(max < moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]))){
-        max = moment(subArr[subIdx][0]).diff(moment(subArr[subIdx-1][1]));
-      }
+
     }
 
     // end point case
@@ -77,6 +75,13 @@ function releaseSchedule(req, res){
 
 
   }
+
+  for(let z=0; z < subArr.length-1; z++){
+    if(max < moment(subArr[z+1][0]).diff(moment(subArr[z][1]))){
+      max = moment(subArr[z+1][0]).diff(moment(subArr[z][1]));
+    }
+  }
+
 
   max /= 1000;
 
