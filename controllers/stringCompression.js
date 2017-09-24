@@ -62,7 +62,7 @@ function LZW (str) {
   }
 
   let compressed = lzwCompress.pack(str)
-  return compressed.length * 12
+  return (compressed.length + 1) * 12
 }
 
 function WDE (str) {
@@ -77,7 +77,7 @@ function WDE (str) {
     if (isLetter(str[i])) {
       substr += str[i]
     } else {
-      if (Object.keys(dictionary).length <= 4096) {
+      if (Object.keys(dictionary).length < 4096) {
         bits += 12
         if (substr !== '') {
           dictionary[substr] = substr.length
