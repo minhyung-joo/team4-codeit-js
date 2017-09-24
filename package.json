@@ -25,6 +25,7 @@
     "lodash": "^4.17.4",
     "lzwcompress": "^0.2.4",
     "moment": "^2.18.1",
+    "timsort": "^0.3.0",
     "turf": "^3.0.14"
   },
   "devDependencies": {

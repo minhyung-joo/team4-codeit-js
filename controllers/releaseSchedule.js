@@ -98,7 +98,7 @@ function releaseSchedule(req, res){
 
 
 function getTime(str){
-  let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
+  // let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
   // let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let final = moment(str, "DD-MM-YYYY HH:mm:ss.SSS")
