@@ -72,6 +72,10 @@ function processNewMessage (message) {
     return
   }
 
+  if (message.orderType === 'LMT' && !message.price) {
+    return
+  }
+
   message.state = 'LIVE'
   message.openQuantity = message.quantity
   tryMatching(message)
@@ -160,6 +164,9 @@ function tryMatching (message) {
       .filter(order => order.price === bestPrice)
       .sort((a, b) => a.messageId - b.messageId)[0]
 
+    if (message.orderType === 'MKT' && !message.price) {
+      message.price = bestPrice
+    }
     if (message.orderType === 'LMT') {
       if (
         (message.side === 'B' && message.price < bestPrice) ||
