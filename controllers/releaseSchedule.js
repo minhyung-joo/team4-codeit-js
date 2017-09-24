@@ -9,7 +9,9 @@ function releaseSchedule(req, res){
   const startIT = getTime(inputArr[0].split(";")[1]);
   const endIT = getTime(inputArr[0].split(";")[2]);
 
-
+  if(numTasks === 0){
+    return res.type('text/plain').status(200).send(endIT.diff(startIT, 'milliseconds'))
+  }
   let pairArr = [[startIT, startIT]]
   let i = 1;
   for(i; i <= numTasks; i++){
@@ -85,11 +87,13 @@ function releaseSchedule(req, res){
   }
 
 
-  max /= 1000;
+  // Math.round((max/1000)*100)/100;;
+
+  max /= 1000.0
 
   // return res.type('text/plain').status(200).send(max.toString())
   return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('application/json').status(200).json(subArr)
+  // return res.type('application/json').status(200).json(pairArr)
 }
 
 
@@ -103,11 +107,11 @@ function getTime(str){
   let varFinal = moment(final);
 
   if(time.charAt(time.length-5) === '+'){
-    londonTime = varFinal.subtract(timeZone, 'hour').format('LLLL');
+    londonTime = varFinal.subtract(timeZone, 'hour');
   } else if(time.charAt(time.length-5) === '-'){
-    londonTime = varFinal.add(timeZone, 'hour').format('LLLL');
+    londonTime = varFinal.add(timeZone, 'hour');
   } else {
-    londonTime = varFinal.format('LLLL');
+    londonTime = varFinal;
   }
 
   // return moment(londonTime).format('LLLL')
