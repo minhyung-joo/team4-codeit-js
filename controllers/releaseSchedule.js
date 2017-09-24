@@ -23,20 +23,20 @@ function releaseSchedule(req, res){
   // pairArr.push([endIT,endIT])
 
   for(let k=0; k < pairArr.length; k++){
-    if(moment(startIT).diff(moment(pairArr[k][1]), 'milliseconds') > 0.0){
+    if(moment(startIT).diff(moment(pairArr[k][1]), 'milliseconds') >= 0.0){
       pairArr[k][0] = startIT
       pairArr[k][1] = startIT
     }
-     if(moment(startIT).diff(moment(pairArr[k][0]), 'milliseconds') > 0.0) {
+     if(moment(startIT).diff(moment(pairArr[k][0]), 'milliseconds') >= 0.0) {
       pairArr[k][0] = startIT
     }
 
 
     // interval all above endIT
-    if(moment(pairArr[k][1]).diff(moment(endIT), 'milliseconds') > 0.0){
+    if(moment(pairArr[k][1]).diff(moment(endIT), 'milliseconds') >= 0.0){
       pairArr[k][1] = endIT
     }
-     if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') > 0.0){
+     if(moment(pairArr[k][0]).diff(moment(endIT), 'milliseconds') >= 0.0){
       pairArr[k][0] = endIT
       pairArr[k][1] = endIT
     }
@@ -91,8 +91,8 @@ function releaseSchedule(req, res){
 
   max /= 1000.0
 
-  // return res.type('text/plain').status(200).send(max.toString())
-  return res.type('text/plain').status(200).send(getTime(inputArr[0].split(";")[1]))
+  return res.type('text/plain').status(200).send(max.toString())
+  // return res.type('text/plain').status(200).send(getTime(inputArr[0].split(";")[1]))
   // return res.type('application/json').status(200).json(pairArr)
 }
 
