@@ -47,6 +47,7 @@ function trainRoute (req, res) {
   }
 
   while (breakable(stations)) {
+    stations.sort((a, b) => a.connections.length - b.connections.length)
     for (let station of stations) {
       if (shouldBreak(station)) {
         let minConnection
@@ -68,6 +69,7 @@ function trainRoute (req, res) {
         stations = stations.filter(s => s.name !== station.name)
       }
     }
+    console.log(stations)
   }
 
   console.log('stations after break', stations)
@@ -103,21 +105,10 @@ function breakable (stations) {
 }
 
 function shouldBreak (station) {
-  if (station.distance === 1) {
+  if (station.distance <= 1) {
     return false
   }
-  if (station.connections.length === 1) {
-    return true
-  }
 
-  let counters = {}
-  for (let connection of station.connections) {
-    if (!counters[connection.line]) {
-      counters[connection.line] = 1
-    } else {
-      return false
-    }
-  }
   return true
 }
 
