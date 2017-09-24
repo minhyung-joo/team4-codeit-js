@@ -198,7 +198,11 @@ function tryMatching (message) {
       message.price = closePrice[message.symbol]
     }
     standingOrders = orders
-      .filter(order => (order.side !== message.side && order.state === 'LIVE'))
+      .filter(order => (
+        order.side !== message.side &&
+        order.state === 'LIVE' &&
+        order.symbol === message.symbol
+      ))
       .sort((a, b) => {
         if (message.side === 'B') {
           return a.price - b.price
