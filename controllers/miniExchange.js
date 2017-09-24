@@ -82,7 +82,9 @@ function processQuantityMessage (message) {
   const search = orders.filter(order => (order.orderId === message.orderId))
   if (search.length > 0 && search[0].openQuantity + message.quantity >= 0) {
     const order = search[0]
-    order.messageId = message.messageId
+    if (message.quantity > 0) {
+      order.messageId = message.messageId
+    }
     order.openQuantity += message.quantity
     if (order.openQuantity > order.quantity) {
       order.quantity = order.openQuantity
