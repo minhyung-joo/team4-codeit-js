@@ -60,21 +60,11 @@ function releaseSchedule(req, res){
 
       subIdx++;
 
-      // if(moment(pairArr[j][0]).diff(endIT, 'milliseconds') > 0.0){
-      //   subArr[subIdx][0] = endIT
-      //   continue
-      // }
-
     }
 
     // end point case
     if(moment(pairArr[j][1]).diff(subArr[subIdx][1], 'seconds') >= 0.0){
-      // if(moment(pairArr[j][1]).diff(endIT, 'milliseconds') > 0.0){
-      //   subArr[subIdx][1] = endIT
-      //
-      // } else {
-        subArr[subIdx][1] = pairArr[j][1]
-      // }
+      subArr[subIdx][1] = pairArr[j][1]
     }
 
 
@@ -87,20 +77,12 @@ function releaseSchedule(req, res){
   }
 
 
-  // Math.round((max/1000)*100)/100;;
-
-  // max /= 1000.0
-
   return res.type('text/plain').status(200).send(max.toString())
-  // return res.type('text/plain').status(200).send(moment(pairArr[0][1]).diff(subArr[1][1], 'seconds'))
-  // return res.type('application/json').status(200).json(pairArr)
 }
 
 
 function getTime(str){
-  // let dateArr = str.split(" ")[0].split("-") // 28, 05, 2017
   let time = str.split(" ")[1]
-  // let final = dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0]+" "+time.substring(0, 12);
   let final = moment(str, "DD-MM-YYYY HH:mm:ss.SSS")
   let timeZone = time.substring(time.length-4, time.length-2)
   let londonTime;
